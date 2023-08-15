@@ -1,15 +1,14 @@
-.screen{
-    height: 16.65%;
-    width:100%;
-    margin-bottom: 0.65rem;
-    padding: 0 0.65rem;
-    background-color: #785961;
-    border-radius: 0.65rem;
-    display:flex;
-    align-items: center;
-    justify-content: flex-end;
-    color: white;
-    font-weight: bold;
-    box-sizing: border-box;
-
+.screen {
+	height: 16.65%;
+	width: 100%;
+	margin-bottom: 0.65rem;
+	padding: 0 0.65rem;
+	background-color: #785961;
+	border-radius: 0.65rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	color: white;
+	font-weight: bold;
+	box-sizing: border-box;
 }

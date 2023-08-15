@@ -1,18 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
 * {
-  margin: 0;
-  padding: 0;
-  font-family: "Montserrat", sans-serif;
+	margin: 0;
+	padding: 0;
+	font-family: "Montserrat", sans-serif;
 }
 
 body {
-  padding-top: 5%;
-  display: flex;
-  align-items: center;;
-  justify-content: center;
-  background-image: url("https://img.freepik.com/premium-vector/abstract-watercolor-art-background-vector-botanical-line-art-wallpaper-wall-decoration-postcard-brochure-cover-design-banner-beauty-website_322978-1618.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 115%;
-
+	padding-top: 5%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-image: url("https://img.freepik.com/premium-vector/abstract-watercolor-art-background-vector-botanical-line-art-wallpaper-wall-decoration-postcard-brochure-cover-design-banner-beauty-website_322978-1618.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 115%;
 }
