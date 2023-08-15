@@ -16,3 +16,14 @@ app.post("/add_calculation", async (request, response) => {
 		response.status(500).send(err);
 	}
 });
+
+app.get("/calculations", async (request, response) => {
+	try {
+		const calculations = await calculationModel.find();
+		response.send(calculations);
+	} catch (err) {
+		response.status(500).send(err);
+	}
+});
+
+module.exports = app;
