@@ -4,6 +4,7 @@ import ButtonBox from "./components/ButtonBox";
 import Button from "./components/Button";
 import React, { useState } from "react";
 
+
 const btnValues = [
 	["C", "+-", "%", "/"],
 	[7, 8, 9, "X"],
@@ -17,14 +18,26 @@ const toLocaleString = (num) =>
   
 const removeSpaces = (num) => num.toString().replace(/\s/g, "");
 
-
 const App = () => {
 	let [calculation, setCalculation] = useState({
 		operator: "",
 		num: 0,
 		answer: 0,
 	});
-
+ 
+	
+	const commaClickHandler = (e) => {
+		e.preventDefault();
+		const value = e.target.innerHTML;
+		
+		setCalculation({
+			...calculation,
+			num: !calculation.num.toString().includes(".")
+			? calculation.num + value
+			: calculation.num,
+		});
+	};
+	
 	const numClickHandler = (e) => {
 		e.preventDefault();
 		const value = e.target.innerHTML;
@@ -34,30 +47,19 @@ const App = () => {
 				...calculation,
 				num:
 					calculation.num === 0 && value === "0"
-						? "0"
-						: removeSpaces(calculation.num) % 1 === 0
+					? "0"
+					: removeSpaces(calculation.num) % 1 === 0
 						? toLocaleString(Number(removeSpaces(calculation.num + value)))
 						: toLocaleString(calculation.num + value),
 				answer: !calculation.operator ? 0 : calculation.answer,
 			});
 		}
+
 	};
-
-	const commaClickHandler = (e) => {
-		e.preventDefault();
-		const value = e.target.innerHTML;
-
-		setCalculation({
-			...calculation,
-			num: !calculation.num.toString().includes(".")
-				? calculation.num + value
-				: calculation.num,
-		});
-	};
-
 	const signClickHandler = (e) => {
 		e.preventDefault();
 		const value = e.target.innerHTML;
+		
 
 		setCalculation({
 			...calculation,
@@ -79,34 +81,41 @@ const App = () => {
 					? a - b
 					: operator === "X"
 					? a * b
-          : a / b;
-      
-      setCalculation({
-        ...calculation,
-        answer:
-          calculation.num === "0" && calculation.sign === "/"
-            ? "Can't divide with 0"
-            : toLocaleString(math(Number(removeSpaces(calculation.answer)), Number(removeSpaces(calculation.num)), calculation.operator)),
-        operator: "",
-        num: 0,
-      });
-      
+					: a / b;
+			
+			const result = toLocaleString(
+				math(
+					Number(removeSpaces(calculation.answer)),
+					Number(removeSpaces(calculation.num)),
+					calculation.operator
+				)
+			);
+
+			
+			setCalculation({
+				...calculation,
+				answer:result,
+				operator: "",
+				num: 0,
+			});
+
 		}
-  };
+	};
+	
   
-  const invertClickHandler = () => {
-    setCalculation({
-		...calculation,
-		num: calculation.num ? toLocaleString(removeSpaces(calculation.num) * -1) : 0,
-		answer: calculation.answer ? toLocaleString(removeSpaces(calculation.answer) * -1) : 0,
-		sign: "",
-	});
-  };
+	const invertClickHandler = () => {
+		setCalculation({
+			...calculation,
+			num: calculation.num ? toLocaleString(removeSpaces(calculation.num) * -1) : 0,
+			answer: calculation.answer ? toLocaleString(removeSpaces(calculation.answer) * -1) : 0,
+			sign: "",
+		});
+	};
 
   const percentClickHandler = () => {
     let num = calculation.num ? parseFloat(removeSpaces(calculation.num)) : 0;
     let answer = calculation.answer ? parseFloat(removeSpaces(calculation.answer)) : 0;
-
+	
     setCalculation({
       ...calculation,
       num: (num /= Math.pow(100, 1)),
@@ -116,49 +125,54 @@ const App = () => {
   };
 
   const resetClickHandler = () => {
-    setCalculation({
-      ...calculation,
-      operator: "",
+	  setCalculation({
+		  ...calculation,
+		  operator: "",
       num: 0,
       answer: 0,
     });
-  };
+};
 
+	
 	return (
-		<Wrapper>
-			<Screen
-				value={calculation.num ? calculation.num : calculation.answer}
-			/>
-			<ButtonBox>
-				{btnValues.flat().map((btn, i) => {
-					return (
-						<Button
-							key={i}
-							className={btn === "=" ? "equals" : ""}
-							value={btn}
-							onClick={
-								btn === "C"
-									? resetClickHandler
-									: btn === "+-"
-									? invertClickHandler
-									: btn === "%"
-									? percentClickHandler
-									: btn === "="
-									? equalsClickHandler
-									: btn === "/" ||
-									  btn === "X" ||
-									  btn === "-" ||
-									  btn === "+"
-									? signClickHandler
-									: btn === "."
-									? commaClickHandler
-									: numClickHandler
-							}
-						/>
-					);
-				})}
-			</ButtonBox>
-		</Wrapper>
+		<div className="main">
+			<Wrapper>
+				<Screen
+					value={
+						calculation.num  ? calculation.num : calculation.operator ?calculation.operator : calculation.answer
+					}
+				/>
+				<ButtonBox>
+					{btnValues.flat().map((btn, i) => {
+						return (
+							<Button
+								key={i}
+								className={btn === "=" ? "equals" : ""}
+								value={btn}
+								onClick={
+									btn === "C"
+										? resetClickHandler
+										: btn === "+-"
+										? invertClickHandler
+										: btn === "%"
+										? percentClickHandler
+										: btn === "="
+										? equalsClickHandler
+										: btn === "/" ||
+										  btn === "X" ||
+										  btn === "-" ||
+										  btn === "+"
+										? signClickHandler
+										: btn === "."
+										? commaClickHandler
+										: numClickHandler
+								}
+							/>
+						);
+					})}
+				</ButtonBox>
+			</Wrapper>
+		</div>
 	);
 }
 
